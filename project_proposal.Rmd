@@ -1,0 +1,69 @@
+---
+title: "Project Proposal: County Level Maternal Mortality Indicators "
+subtitle: "PPOL5203"
+author: "Elisha Clark, Sarah Mathey, Kaitlyn Vana"
+date: "`r Sys.Date()`"
+fontsize: 12pt
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+library(tinytex)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Research Question
+
+Abortion laws have changed with remarkable speed in the past decade compared to when they first reached the high court with the decision of Roe v. Wade. Laws across states leading up to the landmark decision being struck down in the summer of 2022 were already becoming more stringent, affecting access to abortion-related healthcare. Given these circumstances, the research question we would like to answer is: controlling for political variation, what are the most relevant indicators of maternal mortality?
+
+## Data and Methodology
+
+To answer our research question we intend to use skills we’ve developed in class this semester, including web scraping, data wrangling, statistical analysis and data visualization, to gather, clean, and analyze data on maternal mortality rates, demographics, health indicators, abortion policies, and partisan control of governments by county to better understand variations in maternal mortality rates across the United States. 
+
+We’ve identified online datasets that will allow us to estimate the following models:
+
+$$
+Maternal Mortality = \beta_0 + \beta_1RestrictiveAbortionLaw + \beta_2RepublicanControlOfStateGovernment 
+$$
+$$
++ \beta_3PresidentiaVoteShare + \beta_4ObgynProviderRate + \beta_5PrePregnancyObesity +
+$$
+$$
+ \beta_5PrePregnancyHypertension + \beta_6LowIncome + \beta_7AfricanAmericanShare +
+$$
+$$
+ \beta_8HispanicShare +\beta_9AsianShare +\epsilon
+$$
+
+As an auxiliary regression, we are interested in seeing whether or not a county’s maternal mortality rate impacted the way they voted in the 2024 presidential election. 
+
+$$	
+Republican Presidential Vote Share= \beta_0 + \beta_1MaternalMortalityRate + 
+$$
+$$
++ \beta_7AfricanAmericanShare +\beta_8HispanicShare +\beta_9AsianShare +\epsilon
+$$
+
+### Data sources 
+
+#### Dependent Variable 
+
+- [Maternal Mortality by County](https://vizhub.healthdata.org/subnational/usa)
+
+#### Independent Variables
+
+- [State level partisan data](https://ballotpedia.org/) (Republican control of state government, county level voting data, state level abortion laws)
+- [Health indicators by county level](https://data.hrsa.gov/maps/mchb)
+
+
+## Our Plan to Obtain The Data
+
+Most of these datasets are readily available for download. Where necessary we can scrape websites like Ballotpedia for political independent variables. 
+The important piece of this project will be for us to clean and combine all of these disparate data sources into one dataset. Major challenges in collecting this data will include accurate documentation and understanding the impact of using public health data from different time periods based on limited availability. 
+Additionally, we will likely encounter many counties with missing data for most if not all of our chosen variables due in part to variations in population size that could impact the power of our dataset. Generally, we are hopeful to be able to collect data for counties with 250,000 or more residents. 
+
+## A Successful Project
+
+Based on what we have learned so far, there seems to be a gap in our knowledge of this topic, as no dataset like this already exists. Our goal for this project is to create this dataset and make it available for research beyond the scope of our own analysis. Additionally, examining the results of analysis on this dataset will hopefully allow lawmakers and voters to make more informed decisions about the direct effects of certain types of legislation on the quality of healthcare and mortality rate of citizens on a county level. Ten states featured ballot measures affirming reproductive rights with seven passing them into law. With our dataset and research methodologies in place, the ability to expand on our project will be needed to further analyze these effects. Establishing the relationship between demographics and maternal mortality as well as political ideology could allow us to understand where this issue may be the most urgent. Surprising results would be no relationship between the aforementioned indicators, as well as a negative correlation between certain indicators, such as maternal mortality and the passage of reproductive healthcare legislation.
