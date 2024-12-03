@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+#install.packages("usmap")
+library(usmap) #import the package
+library(ggplot2) #use ggplot2 to add layer for visualization
+library(tidyverse)
+state_data<-read_csv('~/Desktop/ds_1_problem_sets/ppol5203_final_project/map_state_data.csv')
+guttmacher_data<-read_csv('~/Desktop/ds_1_problem_sets/ppol5203_final_project/data/abortion_laws_index.csv')
+guttmacher_data['state'] = guttmacher_data["State Abbreviation"]
+guttmacher_data$guttmacher_index <- factor(guttmacher_data$guttmacher_index,
+                                               levels = c("most_restrictive", "very_restrictive", "restrictive", "some_restrictions_protections", "protective", "very_protective","most_protective"))
+
+factor(mydf$task, levels = c("up", "down", "left", "right", "front", "back"))
+```
+```{r}
+
+
+plot_usmap(data = state_data
+           , values = "val"
+           #, include = c("CT", "ME", "MA", "NH", "VT")
+           #, color = "blue"
+           ) + 
+  scale_fill_continuous(low = "grey", high = "darkred", name = "Maternal Mortality (2019)", label = scales::comma) + 
+  #labs(title = "New England Region", subtitle = "Poverty Percentage Estimates for New England Counties in 2014") +
+  theme(legend.position = "right")
+```
+```{r}
+
+plot_usmap(data = guttmacher_data
+           , values = "guttmacher_index") + 
+  scale_fill_manual(values = c("darkred","red","pink","white","lightgrey","grey","darkgrey"), name = "Guttmacher Index") + 
+  theme(legend.position = "bottom")
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
