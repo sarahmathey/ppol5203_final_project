@@ -24,6 +24,7 @@ state_data<- state_data%>%
 
 state_data<-left_join(state_data, gop_trifecta, join_by(state_name == state))
 state_data$gop_trifecta<-factor(state_data$gop_trifecta)
+state_data$mmr_100k<-state_data$val*100000
 
 state_data<-state_data%>%
   filter(!(NAME %in% c('District of Columbia','Puerto Rico')))
@@ -31,10 +32,10 @@ state_data<-state_data%>%
 ```
 ```{r}
 mmr_viz<-plot_usmap(data = state_data
-           , values = "val"
+           , values = "mmr_100k"
            ) + 
-  scale_fill_continuous(low = "black", high = "#c900ff", name = "Maternal Mortality (2019)", label = scales::comma) + 
-  labs(title = "Maternal Mortality Rates by State (2019)", caption = "Source: Institute for Health Metrics and Evaluation https://vizhub.healthdata.org/subnational/usa")+
+  scale_fill_continuous(low = "black", high = "#c900ff", name = "2019 Maternal Mortality (per 100K)", label = scales::comma) + 
+  labs(title = "2019 Maternal Mortality Rates by State (per 100k)", caption = "Source: Institute for Health Metrics and Evaluation https://vizhub.healthdata.org/subnational/usa")+
   theme(legend.position = "bottom",
         plot.title = element_text(hjust = 0.5))
 ggsave('~/Desktop/ds_1_problem_sets/ppol5203_final_project/viz/mmr_viz.png', plot=mmr_viz, width = 8, height = 6, dpi = 300)

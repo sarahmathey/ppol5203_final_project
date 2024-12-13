@@ -1760,58 +1760,128 @@ the chunk or by placing your cursor inside it and pressing
 <em>Cmd+Shift+Enter</em>.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhdGVfZGF0YTwtbGVmdF9qb2luKHN0YXRlX2RhdGEsIGdvcF90cmlmZWN0YSwgam9pbl9ieShzdGFlX25hbWUgPT0gc3RhdGUpKVxuXG5gYGAifQ== -->
-<pre class="r"><code>state_data&lt;-left_join(state_data, gop_trifecta, join_by(stae_name == state))
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2luc3RhbGwucGFja2FnZXMoXCJ1c21hcFwiKVxubGlicmFyeSh1c21hcCkgI2ltcG9ydCB0aGUgcGFja2FnZVxubGlicmFyeShnZ3Bsb3QyKSAjdXNlIGdncGxvdDIgdG8gYWRkIGxheWVyIGZvciB2aXN1YWxpemF0aW9uXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmBgYCJ9 -->
+<pre class="r"><code>#install.packages(&quot;usmap&quot;)
+library(usmap) #import the package
+library(ggplot2) #use ggplot2 to add layer for visualization
+library(tidyverse)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoi4pSA4pSAIEF0dGFjaGluZyBjb3JlIHRpZHl2ZXJzZSBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDIuMC4wIOKUgOKUgFxu4pyUIGRwbHlyICAgICAxLjEuNCAgICAg4pyUIHJlYWRyICAgICAyLjEuNVxu4pyUIGZvcmNhdHMgICAxLjAuMCAgICAg4pyUIHN0cmluZ3IgICAxLjUuMVxu4pyUIGx1YnJpZGF0ZSAxLjkuMyAgICAg4pyUIHRpYmJsZSAgICAzLjIuMVxu4pyUIHB1cnJyICAgICAxLjAuMiAgICAg4pyUIHRpZHlyICAgICAxLjMuMVxu4pSA4pSAIENvbmZsaWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxu4pyWIGRwbHlyOjpmaWx0ZXIoKSBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbuKcliBkcGx5cjo6bGFnKCkgICAgbWFza3Mgc3RhdHM6OmxhZygpXG7ihLkgVXNlIHRoZSBcdTAwMWJdODs7aHR0cDovL2NvbmZsaWN0ZWQuci1saWIub3JnL1x1MDAwN2NvbmZsaWN0ZWQgcGFja2FnZVx1MDAxYl04OztcdTAwMDcgdG8gZm9yY2UgYWxsIGNvbmZsaWN0cyB0byBiZWNvbWUgZXJyb3JzXG4ifQ== -->
+<pre><code>── Attaching core tidyverse packages ────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+── Conflicts ──────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the ]8;;http://conflicted.r-lib.org/conflicted package]8;; to force all conflicts to become errors</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhdGVfZGF0YTwtcmVhZF9jc3YoJ34vRGVza3RvcC9kc18xX3Byb2JsZW1fc2V0cy9wcG9sNTIwM19maW5hbF9wcm9qZWN0L21hcF9zdGF0ZV9kYXRhLmNzdicpXG5gYGAifQ== -->
+<pre class="r"><code>state_data&lt;-read_csv(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/map_state_data.csv&#39;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTmV3IG5hbWVzOlxu4oCiIGBgIC0+IGAuLi4xYFxuUm93czogNTMgQ29sdW1uczogMjlcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAoMTQpOiBOQU1FLCBTVEFURUZQLCBTVEFURU5TLCBBRkZHRU9JRCwgR0VPSUQsIFNUVVNQUywgTFNBRCwgZ2VvbWUuLi5cbmRibCAoMTUpOiAuLi4xLCBBTEFORCwgQVdBVEVSLCBtZWFzdXJlX2lkLCBsb2NhdGlvbl9pZCwgZmlwcywgcmFjZV9pZCwuLi5cblxu4oS5IFVzZSBgc3BlYygpYCB0byByZXRyaWV2ZSB0aGUgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbiBmb3IgdGhpcyBkYXRhLlxu4oS5IFNwZWNpZnkgdGhlIGNvbHVtbiB0eXBlcyBvciBzZXQgYHNob3dfY29sX3R5cGVzID0gRkFMU0VgIHRvIHF1aWV0IHRoaXMgbWVzc2FnZS5cbiJ9 -->
+<pre><code>New names:
+• `` -&gt; `...1`
+Rows: 53 Columns: 29
+── Column specification ──────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (14): NAME, STATEFP, STATENS, AFFGEOID, GEOID, STUSPS, LSAD, geome...
+dbl (15): ...1, ALAND, AWATER, measure_id, location_id, fips, race_id,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3V0dG1hY2hlcl9kYXRhPC1yZWFkX2Nzdignfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3QvZGF0YS9hYm9ydGlvbl9sYXdzX2luZGV4LmNzdicpXG5gYGAifQ== -->
+<pre class="r"><code>guttmacher_data&lt;-read_csv(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/data/abortion_laws_index.csv&#39;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNTAgQ29sdW1uczogMzJcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgKDMpOiBTdGF0ZSBBYmJyZXZpYXRpb24sIGNhdGVnb3J5LCBndXR0bWFjaGVyX2luZGV4XG5kYmwgKDI5KTogY3JpbWluYWxpemVfc21hLCBwcmVfcm9lX2JhbiwgdGVsZW1lZGljaW5lX2JhbiwgdHJpZ2dlcl9iYW4sLi4uXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>Rows: 50 Columns: 32
+── Column specification ──────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (3): State Abbreviation, category, guttmacher_index
+dbl (29): criminalize_sma, pre_roe_ban, telemedicine_ban, trigger_ban,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ29wX3RyaWZlY3RhPC1yZWFkX2Nzdignfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3QvZGF0YS9zdGF0ZV9nb3ZfY29udHJvbF8yMDE3LmNzdicpXG5gYGAifQ== -->
+<pre class="r"><code>gop_trifecta&lt;-read_csv(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/data/state_gov_control_2017.csv&#39;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTmV3IG5hbWVzOlxu4oCiIGBgIC0+IGAuLi4xYFxuUm93czogNTAgQ29sdW1uczogMTRcbuKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgKDQpOiBzdGF0ZSwgc2VuX2NvbnRyb2wsIGhvdXNlX2NvbnRyb2wsIGdvdmVybm9yX3BhcnR5XG5kYmwgKDEwKTogLi4uMSwgaW5kZXgsIFllYXIsIHNlbl9lbGVjX3llYXIsIHNlbl9sZWdfc3RhcnQsIHNlbl9sZWdfZW5kLi4uXG5cbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
+<pre><code>New names:
+• `` -&gt; `...1`
+Rows: 50 Columns: 14
+── Column specification ──────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr  (4): state, sen_control, house_control, governor_party
+dbl (10): ...1, index, Year, sen_elec_year, sen_leg_start, sen_leg_end...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3V0dG1hY2hlcl9kYXRhWydzdGF0ZSddID0gZ3V0dG1hY2hlcl9kYXRhW1wiU3RhdGUgQWJicmV2aWF0aW9uXCJdXG5ndXR0bWFjaGVyX2RhdGEkZ3V0dG1hY2hlcl9pbmRleCA8LSBmYWN0b3IoZ3V0dG1hY2hlcl9kYXRhJGd1dHRtYWNoZXJfaW5kZXgsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmVscyA9IGMoXCJtb3N0X3Jlc3RyaWN0aXZlXCIsIFwidmVyeV9yZXN0cmljdGl2ZVwiLCBcInJlc3RyaWN0aXZlXCIsIFwic29tZV9yZXN0cmljdGlvbnNfcHJvdGVjdGlvbnNcIiwgXCJwcm90ZWN0aXZlXCIsIFwidmVyeV9wcm90ZWN0aXZlXCIsXCJtb3N0X3Byb3RlY3RpdmVcIikpXG5cbnN0YXRlX2RhdGE8LSBzdGF0ZV9kYXRhJT4lXG4gIG11dGF0ZShzdGF0ZV9uYW1lID0gc3RyX3JlcGxhY2UoTkFNRSwgXCIgXCIsIFwiX1wiKSlcblxuc3RhdGVfZGF0YTwtbGVmdF9qb2luKHN0YXRlX2RhdGEsIGdvcF90cmlmZWN0YSwgam9pbl9ieShzdGF0ZV9uYW1lID09IHN0YXRlKSlcbnN0YXRlX2RhdGEkZ29wX3RyaWZlY3RhPC1mYWN0b3Ioc3RhdGVfZGF0YSRnb3BfdHJpZmVjdGEpXG5zdGF0ZV9kYXRhJG1tcl8xMDBrPC1zdGF0ZV9kYXRhJHZhbCoxMDAwMDBcblxuc3RhdGVfZGF0YTwtc3RhdGVfZGF0YSU+JVxuICBmaWx0ZXIoIShOQU1FICVpbiUgYygnRGlzdHJpY3Qgb2YgQ29sdW1iaWEnLCdQdWVydG8gUmljbycpKSlcblxuYGBgIn0= -->
+<pre class="r"><code>guttmacher_data[&#39;state&#39;] = guttmacher_data[&quot;State Abbreviation&quot;]
+guttmacher_data$guttmacher_index &lt;- factor(guttmacher_data$guttmacher_index,
+                                               levels = c(&quot;most_restrictive&quot;, &quot;very_restrictive&quot;, &quot;restrictive&quot;, &quot;some_restrictions_protections&quot;, &quot;protective&quot;, &quot;very_protective&quot;,&quot;most_protective&quot;))
+
+state_data&lt;- state_data%&gt;%
+  mutate(state_name = str_replace(NAME, &quot; &quot;, &quot;_&quot;))
+
+state_data&lt;-left_join(state_data, gop_trifecta, join_by(state_name == state))
+state_data$gop_trifecta&lt;-factor(state_data$gop_trifecta)
+state_data$mmr_100k&lt;-state_data$val*100000
+
+state_data&lt;-state_data%&gt;%
+  filter(!(NAME %in% c(&#39;District of Columbia&#39;,&#39;Puerto Rico&#39;)))
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYGxlZnRfam9pbigpYDpcbiEgSm9pbiBjb2x1bW5zIGluIGB4YCBtdXN0IGJlIHByZXNlbnQgaW4gdGhlIGRhdGEuXG7inJYgUHJvYmxlbSB3aXRoIGBzdGFlX25hbWVgLlxuQmFja3RyYWNlOlxuIDEuIGRwbHlyOjpsZWZ0X2pvaW4oLi4uKVxuIDIuIGRwbHlyOjo6bGVmdF9qb2luLmRhdGEuZnJhbWUoc3RhdGVfZGF0YSwgZ29wX3RyaWZlY3RhLCBqb2luX2J5KHN0YWVfbmFtZSA9PSBzdGF0ZSkpXG4ifQ== -->
-<pre><code>Error in `left_join()`:
-! Join columns in `x` must be present in the data.
-✖ Problem with `stae_name`.
-Backtrace:
- 1. dplyr::left_join(...)
- 2. dplyr:::left_join.data.frame(state_data, gop_trifecta, join_by(stae_name == state))</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW1yX3ZpejwtcGxvdF91c21hcChkYXRhID0gc3RhdGVfZGF0YVxuICAgICAgICAgICAsIHZhbHVlcyA9IFwidmFsXCJcbiAgICAgICAgICAgKSArIFxuICBzY2FsZV9maWxsX2NvbnRpbnVvdXMobG93ID0gXCJibGFja1wiLCBoaWdoID0gXCIjYzkwMGZmXCIsIG5hbWUgPSBcIk1hdGVybmFsIE1vcnRhbGl0eSAoMjAxOSlcIiwgbGFiZWwgPSBzY2FsZXM6OmNvbW1hKSArIFxuICBsYWJzKHRpdGxlID0gXCJNYXRlcm5hbCBNb3J0YWxpdHkgUmF0ZXMgYnkgU3RhdGUgKDIwMTkpXCIsIGNhcHRpb24gPSBcIlNvdXJjZTogSW5zdGl0dXRlIGZvciBIZWFsdGggTWV0cmljcyBhbmQgRXZhbHVhdGlvbiBodHRwczovL3Zpemh1Yi5oZWFsdGhkYXRhLm9yZy9zdWJuYXRpb25hbC91c2FcIikrXG4gIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbiA9IFwiYm90dG9tXCIsXG4gICAgICAgIHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuZ2dzYXZlKCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC92aXovbW1yX3Zpei5wbmcnLCBwbG90PW1tcl92aXosIHdpZHRoID0gOCwgaGVpZ2h0ID0gNiwgZHBpID0gMzAwKVxuYGBgIn0= -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW1yX3ZpejwtcGxvdF91c21hcChkYXRhID0gc3RhdGVfZGF0YVxuICAgICAgICAgICAsIHZhbHVlcyA9IFwibW1yXzEwMGtcIlxuICAgICAgICAgICApICsgXG4gIHNjYWxlX2ZpbGxfY29udGludW91cyhsb3cgPSBcImJsYWNrXCIsIGhpZ2ggPSBcIiNjOTAwZmZcIiwgbmFtZSA9IFwiMjAxOSBNYXRlcm5hbCBNb3J0YWxpdHkgKHBlciAxMDBLKVwiLCBsYWJlbCA9IHNjYWxlczo6Y29tbWEpICsgXG4gIGxhYnModGl0bGUgPSBcIjIwMTkgTWF0ZXJuYWwgTW9ydGFsaXR5IFJhdGVzIGJ5IFN0YXRlIChwZXIgMTAwaylcIiwgY2FwdGlvbiA9IFwiU291cmNlOiBJbnN0aXR1dGUgZm9yIEhlYWx0aCBNZXRyaWNzIGFuZCBFdmFsdWF0aW9uIGh0dHBzOi8vdml6aHViLmhlYWx0aGRhdGEub3JnL3N1Ym5hdGlvbmFsL3VzYVwiKStcbiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uID0gXCJib3R0b21cIixcbiAgICAgICAgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpXG5nZ3NhdmUoJ34vRGVza3RvcC9kc18xX3Byb2JsZW1fc2V0cy9wcG9sNTIwM19maW5hbF9wcm9qZWN0L3Zpei9tbXJfdml6LnBuZycsIHBsb3Q9bW1yX3Zpeiwgd2lkdGggPSA4LCBoZWlnaHQgPSA2LCBkcGkgPSAzMDApXG5gYGAifQ== -->
 <pre class="r"><code>mmr_viz&lt;-plot_usmap(data = state_data
-           , values = &quot;val&quot;
+           , values = &quot;mmr_100k&quot;
            ) + 
-  scale_fill_continuous(low = &quot;black&quot;, high = &quot;#c900ff&quot;, name = &quot;Maternal Mortality (2019)&quot;, label = scales::comma) + 
-  labs(title = &quot;Maternal Mortality Rates by State (2019)&quot;, caption = &quot;Source: Institute for Health Metrics and Evaluation https://vizhub.healthdata.org/subnational/usa&quot;)+
+  scale_fill_continuous(low = &quot;black&quot;, high = &quot;#c900ff&quot;, name = &quot;2019 Maternal Mortality (per 100K)&quot;, label = scales::comma) + 
+  labs(title = &quot;2019 Maternal Mortality Rates by State (per 100k)&quot;, caption = &quot;Source: Institute for Health Metrics and Evaluation https://vizhub.healthdata.org/subnational/usa&quot;)+
   theme(legend.position = &quot;bottom&quot;,
         plot.title = element_text(hjust = 0.5))
 ggsave(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/viz/mmr_viz.png&#39;, plot=mmr_viz, width = 8, height = 6, dpi = 300)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5ndXR0bWFjaGVyX2luZGV4X3ZpejwtcGxvdF91c21hcChkYXRhID0gZ3V0dG1hY2hlcl9kYXRhXG4gICAgICAgICAgICwgdmFsdWVzID0gXCJndXR0bWFjaGVyX2luZGV4XCIpICsgXG4gIHNjYWxlX2ZpbGxfbWFudWFsKHZhbHVlcyA9IGMoXCIjYzgwMGZmXCIsXCIjYjUwMGMwXCIsXCIjOTkwMDhhXCIsXCIjNzgwMDVkXCIsXCIjNTMwNTM4XCIsXCIjMmQwYzFjXCIsXCIjMDAwMDAwXCIpLCBuYW1lID0gXCJHdXR0bWFjaGVyIEluZGV4XCIsbmEudHJhbnNsYXRlID0gRkFMU0UpICsgXG4gIGxhYnModGl0bGUgPSBcIkd1dHRtYWNoZXIgU3RhdGUgQWJvcnRpb24gUG9saXRjeSBJbmRleFwiLCBjYXB0aW9uID0gXCJTb3VyY2U6IEd1dHRtYWNoZXIgSW5zdGl0dXRlIGh0dHBzOi8vc3RhdGVzLmd1dHRtYWNoZXIub3JnL3BvbGljaWVzL1wiKStcbiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uID0gXCJib3R0b21cIixcbiAgICAgICAgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpXG5nZ3NhdmUoJ34vRGVza3RvcC9kc18xX3Byb2JsZW1fc2V0cy9wcG9sNTIwM19maW5hbF9wcm9qZWN0L3Zpei9ndXR0bWFjaGVyX2luZGV4X3Zpei5wbmcnLCBwbG90PWd1dHRtYWNoZXJfaW5kZXhfdml6LCB3aWR0aCA9IDgsIGhlaWdodCA9IDYsIGRwaSA9IDMwMClcbmBgYCJ9 -->
-<pre class="r"><code>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG5ndXR0bWFjaGVyX2luZGV4X3ZpejwtcGxvdF91c21hcChkYXRhID0gZ3V0dG1hY2hlcl9kYXRhXG4gICAgICAgICAgICwgdmFsdWVzID0gXFxndXR0bWFjaGVyX2luZGV4XFwpICsgXG4gIHNjYWxlX2ZpbGxfbWFudWFsKHZhbHVlcyA9IGMoXFwjYzgwMGZmXFwsXFwjYjUwMGMwXFwsXFwjOTkwMDhhXFwsXFwjNzgwMDVkXFwsXFwjNTMwNTM4XFwsXFwjMmQwYzFjXFwsXFwjMDAwMDAwXFwpLCBuYW1lID0gXFxHdXR0bWFjaGVyIEluZGV4XFwsbmEudHJhbnNsYXRlID0gRkFMU0UpICsgXG4gIGxhYnModGl0bGUgPSBcXEd1dHRtYWNoZXIgU3RhdGUgQWJvcnRpb24gUG9saXRjeSBJbmRleFxcLCBjYXB0aW9uID0gXFxTb3VyY2U6IEd1dHRtYWNoZXIgSW5zdGl0dXRlIGh0dHBzOi8vc3RhdGVzLmd1dHRtYWNoZXIub3JnL3BvbGljaWVzL1xcKStcbiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uID0gXFxib3R0b21cXCxcbiAgICAgICAgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpXG5nZ3NhdmUoJ34vRGVza3RvcC9kc18xX3Byb2JsZW1fc2V0cy9wcG9sNTIwM19maW5hbF9wcm9qZWN0L3Zpei9ndXR0bWFjaGVyX2luZGV4X3Zpei5wbmcnLCBwbG90PWd1dHRtYWNoZXJfaW5kZXhfdml6LCB3aWR0aCA9IDgsIGhlaWdodCA9IDYsIGRwaSA9IDMwMClcbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+
 guttmacher_index_viz&lt;-plot_usmap(data = guttmacher_data
-           , values = &quot;guttmacher_index&quot;) + 
-  scale_fill_manual(values = c(&quot;#c800ff&quot;,&quot;#b500c0&quot;,&quot;#99008a&quot;,&quot;#78005d&quot;,&quot;#530538&quot;,&quot;#2d0c1c&quot;,&quot;#000000&quot;), name = &quot;Guttmacher Index&quot;,na.translate = FALSE) + 
-  labs(title = &quot;Guttmacher State Abortion Politcy Index&quot;, caption = &quot;Source: Guttmacher Institute https://states.guttmacher.org/policies/&quot;)+
-  theme(legend.position = &quot;bottom&quot;,
+           , values = \guttmacher_index\) + 
+  scale_fill_manual(values = c(\#c800ff\,\#b500c0\,\#99008a\,\#78005d\,\#530538\,\#2d0c1c\,\#000000\), name = \Guttmacher Index\,na.translate = FALSE) + 
+  labs(title = \Guttmacher State Abortion Politcy Index\, caption = \Source: Guttmacher Institute https://states.guttmacher.org/policies/\)+
+  theme(legend.position = \bottom\,
         plot.title = element_text(hjust = 0.5))
 ggsave(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/viz/guttmacher_index_viz.png&#39;, plot=guttmacher_index_viz, width = 8, height = 6, dpi = 300)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nb3BfdHJpZmVjdGFfMjAxN192aXo8LXBsb3RfdXNtYXAoZGF0YSA9IHN0YXRlX2RhdGFcbiAgICAgICAgICAgLCB2YWx1ZXMgPSBcImdvcF90cmlmZWN0YVwiKSArIFxuICBzY2FsZV9maWxsX21hbnVhbCh2YWx1ZXMgPSBjKFwiIzAwMDAwMFwiLFwiI2M4MDBmZlwiKSwgbmFtZSA9IFwiR09QIFRyaWZlY3RhXCIsIG5hLnRyYW5zbGF0ZSA9IEZBTFNFKSArIFxuICBsYWJzKHRpdGxlID0gXCIyMDE3IEdPUCBTdGF0ZSBHb3Zlcm5pbmcgVHJpZmVjdGFcIiwgY2FwdGlvbiA9IFwiU291cmNlOiBTdGF0ZSBMZWdpc2xhdHVyZSBkYXRhIGZyb20gQmFsbG90cGVkaWEsIEd1YmVybmF0b3JpYWwgZGF0YSBmcm9tIFdpa2lwZWRpYVwiICkrXG4gIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbiA9IFwiYm90dG9tXCIsXG4gICAgICAgIHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUpKVxuXG5nZ3NhdmUoJ34vRGVza3RvcC9kc18xX3Byb2JsZW1fc2V0cy9wcG9sNTIwM19maW5hbF9wcm9qZWN0L3Zpei9nb3BfdHJpZmVjdGFfMjAxN192aXoucG5nJywgcGxvdD1nb3BfdHJpZmVjdGFfMjAxN192aXosIHdpZHRoID0gOCwgaGVpZ2h0ID0gNiwgZHBpID0gMzAwKVxuYGBgIn0= -->
-<pre class="r"><code>
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuXG5nb3BfdHJpZmVjdGFfMjAxN192aXo8LXBsb3RfdXNtYXAoZGF0YSA9IHN0YXRlX2RhdGFcbiAgICAgICAgICAgLCB2YWx1ZXMgPSBcXGdvcF90cmlmZWN0YVxcKSArIFxuICBzY2FsZV9maWxsX21hbnVhbCh2YWx1ZXMgPSBjKFxcIzAwMDAwMFxcLFxcI2M4MDBmZlxcKSwgbmFtZSA9IFxcR09QIFRyaWZlY3RhXFwsIG5hLnRyYW5zbGF0ZSA9IEZBTFNFKSArIFxuICBsYWJzKHRpdGxlID0gXFwyMDE3IEdPUCBTdGF0ZSBHb3Zlcm5pbmcgVHJpZmVjdGFcXCwgY2FwdGlvbiA9IFxcU291cmNlOiBTdGF0ZSBMZWdpc2xhdHVyZSBkYXRhIGZyb20gQmFsbG90cGVkaWFcbmBgYCJ9 --&gt;
+
+```r
+```r
+
 gop_trifecta_2017_viz&lt;-plot_usmap(data = state_data
-           , values = &quot;gop_trifecta&quot;) + 
-  scale_fill_manual(values = c(&quot;#000000&quot;,&quot;#c800ff&quot;), name = &quot;GOP Trifecta&quot;, na.translate = FALSE) + 
-  labs(title = &quot;2017 GOP State Governing Trifecta&quot;, caption = &quot;Source: State Legislature data from Ballotpedia, Gubernatorial data from Wikipedia&quot; )+
-  theme(legend.position = &quot;bottom&quot;,
-        plot.title = element_text(hjust = 0.5))
-
-ggsave(&#39;~/Desktop/ds_1_problem_sets/ppol5203_final_project/viz/gop_trifecta_2017_viz.png&#39;, plot=gop_trifecta_2017_viz, width = 8, height = 6, dpi = 300)</code></pre>
+           , values = \gop_trifecta\) + 
+  scale_fill_manual(values = c(\#000000\,\#c800ff\), name = \GOP Trifecta\, na.translate = FALSE) + 
+  labs(title = \2017 GOP State Governing Trifecta\, caption = \Source: State Legislature data from Ballotpedia</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ21kK1NoaWZ0K0VudGVyKi4gCgpgYGB7cn0KI2luc3RhbGwucGFja2FnZXMoInVzbWFwIikKbGlicmFyeSh1c21hcCkgI2ltcG9ydCB0aGUgcGFja2FnZQpsaWJyYXJ5KGdncGxvdDIpICN1c2UgZ2dwbG90MiB0byBhZGQgbGF5ZXIgZm9yIHZpc3VhbGl6YXRpb24KbGlicmFyeSh0aWR5dmVyc2UpCnN0YXRlX2RhdGE8LXJlYWRfY3N2KCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC9tYXBfc3RhdGVfZGF0YS5jc3YnKQpndXR0bWFjaGVyX2RhdGE8LXJlYWRfY3N2KCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC9kYXRhL2Fib3J0aW9uX2xhd3NfaW5kZXguY3N2JykKZ29wX3RyaWZlY3RhPC1yZWFkX2Nzdignfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3QvZGF0YS9zdGF0ZV9nb3ZfY29udHJvbF8yMDE3LmNzdicpCmd1dHRtYWNoZXJfZGF0YVsnc3RhdGUnXSA9IGd1dHRtYWNoZXJfZGF0YVsiU3RhdGUgQWJicmV2aWF0aW9uIl0KZ3V0dG1hY2hlcl9kYXRhJGd1dHRtYWNoZXJfaW5kZXggPC0gZmFjdG9yKGd1dHRtYWNoZXJfZGF0YSRndXR0bWFjaGVyX2luZGV4LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmVscyA9IGMoIm1vc3RfcmVzdHJpY3RpdmUiLCAidmVyeV9yZXN0cmljdGl2ZSIsICJyZXN0cmljdGl2ZSIsICJzb21lX3Jlc3RyaWN0aW9uc19wcm90ZWN0aW9ucyIsICJwcm90ZWN0aXZlIiwgInZlcnlfcHJvdGVjdGl2ZSIsIm1vc3RfcHJvdGVjdGl2ZSIpKQoKc3RhdGVfZGF0YTwtIHN0YXRlX2RhdGElPiUKICBtdXRhdGUoc3RhdGVfbmFtZSA9IHN0cl9yZXBsYWNlKE5BTUUsICIgIiwgIl8iKSkKCnN0YXRlX2RhdGE8LWxlZnRfam9pbihzdGF0ZV9kYXRhLCBnb3BfdHJpZmVjdGEsIGpvaW5fYnkoc3RhdGVfbmFtZSA9PSBzdGF0ZSkpCnN0YXRlX2RhdGEkZ29wX3RyaWZlY3RhPC1mYWN0b3Ioc3RhdGVfZGF0YSRnb3BfdHJpZmVjdGEpCgpzdGF0ZV9kYXRhPC1zdGF0ZV9kYXRhJT4lCiAgZmlsdGVyKCEoTkFNRSAlaW4lIGMoJ0Rpc3RyaWN0IG9mIENvbHVtYmlhJywnUHVlcnRvIFJpY28nKSkpCgpgYGAKYGBge3J9Cm1tcl92aXo8LXBsb3RfdXNtYXAoZGF0YSA9IHN0YXRlX2RhdGEKICAgICAgICAgICAsIHZhbHVlcyA9ICJ2YWwiCiAgICAgICAgICAgKSArIAogIHNjYWxlX2ZpbGxfY29udGludW91cyhsb3cgPSAiYmxhY2siLCBoaWdoID0gIiNjOTAwZmYiLCBuYW1lID0gIk1hdGVybmFsIE1vcnRhbGl0eSAoMjAxOSkiLCBsYWJlbCA9IHNjYWxlczo6Y29tbWEpICsgCiAgbGFicyh0aXRsZSA9ICJNYXRlcm5hbCBNb3J0YWxpdHkgUmF0ZXMgYnkgU3RhdGUgKDIwMTkpIiwgY2FwdGlvbiA9ICJTb3VyY2U6IEluc3RpdHV0ZSBmb3IgSGVhbHRoIE1ldHJpY3MgYW5kIEV2YWx1YXRpb24gaHR0cHM6Ly92aXpodWIuaGVhbHRoZGF0YS5vcmcvc3VibmF0aW9uYWwvdXNhIikrCiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uID0gImJvdHRvbSIsCiAgICAgICAgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpCmdnc2F2ZSgnfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3Qvdml6L21tcl92aXoucG5nJywgcGxvdD1tbXJfdml6LCB3aWR0aCA9IDgsIGhlaWdodCA9IDYsIGRwaSA9IDMwMCkKYGBgCmBgYHtyfQoKZ3V0dG1hY2hlcl9pbmRleF92aXo8LXBsb3RfdXNtYXAoZGF0YSA9IGd1dHRtYWNoZXJfZGF0YQogICAgICAgICAgICwgdmFsdWVzID0gImd1dHRtYWNoZXJfaW5kZXgiKSArIAogIHNjYWxlX2ZpbGxfbWFudWFsKHZhbHVlcyA9IGMoIiNjODAwZmYiLCIjYjUwMGMwIiwiIzk5MDA4YSIsIiM3ODAwNWQiLCIjNTMwNTM4IiwiIzJkMGMxYyIsIiMwMDAwMDAiKSwgbmFtZSA9ICJHdXR0bWFjaGVyIEluZGV4IixuYS50cmFuc2xhdGUgPSBGQUxTRSkgKyAKICBsYWJzKHRpdGxlID0gIkd1dHRtYWNoZXIgU3RhdGUgQWJvcnRpb24gUG9saXRjeSBJbmRleCIsIGNhcHRpb24gPSAiU291cmNlOiBHdXR0bWFjaGVyIEluc3RpdHV0ZSBodHRwczovL3N0YXRlcy5ndXR0bWFjaGVyLm9yZy9wb2xpY2llcy8iKSsKICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAiYm90dG9tIiwKICAgICAgICBwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKZ2dzYXZlKCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC92aXovZ3V0dG1hY2hlcl9pbmRleF92aXoucG5nJywgcGxvdD1ndXR0bWFjaGVyX2luZGV4X3Zpeiwgd2lkdGggPSA4LCBoZWlnaHQgPSA2LCBkcGkgPSAzMDApCmBgYApgYGB7cn0KCmdvcF90cmlmZWN0YV8yMDE3X3ZpejwtcGxvdF91c21hcChkYXRhID0gc3RhdGVfZGF0YQogICAgICAgICAgICwgdmFsdWVzID0gImdvcF90cmlmZWN0YSIpICsgCiAgc2NhbGVfZmlsbF9tYW51YWwodmFsdWVzID0gYygiIzAwMDAwMCIsIiNjODAwZmYiKSwgbmFtZSA9ICJHT1AgVHJpZmVjdGEiLCBuYS50cmFuc2xhdGUgPSBGQUxTRSkgKyAKICBsYWJzKHRpdGxlID0gIjIwMTcgR09QIFN0YXRlIEdvdmVybmluZyBUcmlmZWN0YSIsIGNhcHRpb24gPSAiU291cmNlOiBTdGF0ZSBMZWdpc2xhdHVyZSBkYXRhIGZyb20gQmFsbG90cGVkaWEsIEd1YmVybmF0b3JpYWwgZGF0YSBmcm9tIFdpa2lwZWRpYSIgKSsKICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAiYm90dG9tIiwKICAgICAgICBwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKCmdnc2F2ZSgnfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3Qvdml6L2dvcF90cmlmZWN0YV8yMDE3X3Zpei5wbmcnLCBwbG90PWdvcF90cmlmZWN0YV8yMDE3X3Zpeiwgd2lkdGggPSA4LCBoZWlnaHQgPSA2LCBkcGkgPSAzMDApCmBgYA==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBbUiBNYXJrZG93bl0oaHR0cDovL3JtYXJrZG93bi5yc3R1ZGlvLmNvbSkgTm90ZWJvb2suIFdoZW4geW91IGV4ZWN1dGUgY29kZSB3aXRoaW4gdGhlIG5vdGVib29rLCB0aGUgcmVzdWx0cyBhcHBlYXIgYmVuZWF0aCB0aGUgY29kZS4gCgpUcnkgZXhlY3V0aW5nIHRoaXMgY2h1bmsgYnkgY2xpY2tpbmcgdGhlICpSdW4qIGJ1dHRvbiB3aXRoaW4gdGhlIGNodW5rIG9yIGJ5IHBsYWNpbmcgeW91ciBjdXJzb3IgaW5zaWRlIGl0IGFuZCBwcmVzc2luZyAqQ21kK1NoaWZ0K0VudGVyKi4gCgpgYGB7cn0KI2luc3RhbGwucGFja2FnZXMoInVzbWFwIikKbGlicmFyeSh1c21hcCkgI2ltcG9ydCB0aGUgcGFja2FnZQpsaWJyYXJ5KGdncGxvdDIpICN1c2UgZ2dwbG90MiB0byBhZGQgbGF5ZXIgZm9yIHZpc3VhbGl6YXRpb24KbGlicmFyeSh0aWR5dmVyc2UpCnN0YXRlX2RhdGE8LXJlYWRfY3N2KCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC9tYXBfc3RhdGVfZGF0YS5jc3YnKQpndXR0bWFjaGVyX2RhdGE8LXJlYWRfY3N2KCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC9kYXRhL2Fib3J0aW9uX2xhd3NfaW5kZXguY3N2JykKZ29wX3RyaWZlY3RhPC1yZWFkX2Nzdignfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3QvZGF0YS9zdGF0ZV9nb3ZfY29udHJvbF8yMDE3LmNzdicpCmd1dHRtYWNoZXJfZGF0YVsnc3RhdGUnXSA9IGd1dHRtYWNoZXJfZGF0YVsiU3RhdGUgQWJicmV2aWF0aW9uIl0KZ3V0dG1hY2hlcl9kYXRhJGd1dHRtYWNoZXJfaW5kZXggPC0gZmFjdG9yKGd1dHRtYWNoZXJfZGF0YSRndXR0bWFjaGVyX2luZGV4LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmVscyA9IGMoIm1vc3RfcmVzdHJpY3RpdmUiLCAidmVyeV9yZXN0cmljdGl2ZSIsICJyZXN0cmljdGl2ZSIsICJzb21lX3Jlc3RyaWN0aW9uc19wcm90ZWN0aW9ucyIsICJwcm90ZWN0aXZlIiwgInZlcnlfcHJvdGVjdGl2ZSIsIm1vc3RfcHJvdGVjdGl2ZSIpKQoKc3RhdGVfZGF0YTwtIHN0YXRlX2RhdGElPiUKICBtdXRhdGUoc3RhdGVfbmFtZSA9IHN0cl9yZXBsYWNlKE5BTUUsICIgIiwgIl8iKSkKCnN0YXRlX2RhdGE8LWxlZnRfam9pbihzdGF0ZV9kYXRhLCBnb3BfdHJpZmVjdGEsIGpvaW5fYnkoc3RhdGVfbmFtZSA9PSBzdGF0ZSkpCnN0YXRlX2RhdGEkZ29wX3RyaWZlY3RhPC1mYWN0b3Ioc3RhdGVfZGF0YSRnb3BfdHJpZmVjdGEpCnN0YXRlX2RhdGEkbW1yXzEwMGs8LXN0YXRlX2RhdGEkdmFsKjEwMDAwMAoKc3RhdGVfZGF0YTwtc3RhdGVfZGF0YSU+JQogIGZpbHRlcighKE5BTUUgJWluJSBjKCdEaXN0cmljdCBvZiBDb2x1bWJpYScsJ1B1ZXJ0byBSaWNvJykpKQoKYGBgCmBgYHtyfQptbXJfdml6PC1wbG90X3VzbWFwKGRhdGEgPSBzdGF0ZV9kYXRhCiAgICAgICAgICAgLCB2YWx1ZXMgPSAibW1yXzEwMGsiCiAgICAgICAgICAgKSArIAogIHNjYWxlX2ZpbGxfY29udGludW91cyhsb3cgPSAiYmxhY2siLCBoaWdoID0gIiNjOTAwZmYiLCBuYW1lID0gIjIwMTkgTWF0ZXJuYWwgTW9ydGFsaXR5IChwZXIgMTAwSykiLCBsYWJlbCA9IHNjYWxlczo6Y29tbWEpICsgCiAgbGFicyh0aXRsZSA9ICIyMDE5IE1hdGVybmFsIE1vcnRhbGl0eSBSYXRlcyBieSBTdGF0ZSAocGVyIDEwMGspIiwgY2FwdGlvbiA9ICJTb3VyY2U6IEluc3RpdHV0ZSBmb3IgSGVhbHRoIE1ldHJpY3MgYW5kIEV2YWx1YXRpb24gaHR0cHM6Ly92aXpodWIuaGVhbHRoZGF0YS5vcmcvc3VibmF0aW9uYWwvdXNhIikrCiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uID0gImJvdHRvbSIsCiAgICAgICAgcGxvdC50aXRsZSA9IGVsZW1lbnRfdGV4dChoanVzdCA9IDAuNSkpCmdnc2F2ZSgnfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3Qvdml6L21tcl92aXoucG5nJywgcGxvdD1tbXJfdml6LCB3aWR0aCA9IDgsIGhlaWdodCA9IDYsIGRwaSA9IDMwMCkKYGBgCmBgYHtyfQoKZ3V0dG1hY2hlcl9pbmRleF92aXo8LXBsb3RfdXNtYXAoZGF0YSA9IGd1dHRtYWNoZXJfZGF0YQogICAgICAgICAgICwgdmFsdWVzID0gImd1dHRtYWNoZXJfaW5kZXgiKSArIAogIHNjYWxlX2ZpbGxfbWFudWFsKHZhbHVlcyA9IGMoIiNjODAwZmYiLCIjYjUwMGMwIiwiIzk5MDA4YSIsIiM3ODAwNWQiLCIjNTMwNTM4IiwiIzJkMGMxYyIsIiMwMDAwMDAiKSwgbmFtZSA9ICJHdXR0bWFjaGVyIEluZGV4IixuYS50cmFuc2xhdGUgPSBGQUxTRSkgKyAKICBsYWJzKHRpdGxlID0gIkd1dHRtYWNoZXIgU3RhdGUgQWJvcnRpb24gUG9saXRjeSBJbmRleCIsIGNhcHRpb24gPSAiU291cmNlOiBHdXR0bWFjaGVyIEluc3RpdHV0ZSBodHRwczovL3N0YXRlcy5ndXR0bWFjaGVyLm9yZy9wb2xpY2llcy8iKSsKICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAiYm90dG9tIiwKICAgICAgICBwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKZ2dzYXZlKCd+L0Rlc2t0b3AvZHNfMV9wcm9ibGVtX3NldHMvcHBvbDUyMDNfZmluYWxfcHJvamVjdC92aXovZ3V0dG1hY2hlcl9pbmRleF92aXoucG5nJywgcGxvdD1ndXR0bWFjaGVyX2luZGV4X3Zpeiwgd2lkdGggPSA4LCBoZWlnaHQgPSA2LCBkcGkgPSAzMDApCmBgYApgYGB7cn0KCmdvcF90cmlmZWN0YV8yMDE3X3ZpejwtcGxvdF91c21hcChkYXRhID0gc3RhdGVfZGF0YQogICAgICAgICAgICwgdmFsdWVzID0gImdvcF90cmlmZWN0YSIpICsgCiAgc2NhbGVfZmlsbF9tYW51YWwodmFsdWVzID0gYygiIzAwMDAwMCIsIiNjODAwZmYiKSwgbmFtZSA9ICJHT1AgVHJpZmVjdGEiLCBuYS50cmFuc2xhdGUgPSBGQUxTRSkgKyAKICBsYWJzKHRpdGxlID0gIjIwMTcgR09QIFN0YXRlIEdvdmVybmluZyBUcmlmZWN0YSIsIGNhcHRpb24gPSAiU291cmNlOiBTdGF0ZSBMZWdpc2xhdHVyZSBkYXRhIGZyb20gQmFsbG90cGVkaWEsIEd1YmVybmF0b3JpYWwgZGF0YSBmcm9tIFdpa2lwZWRpYSIgKSsKICB0aGVtZShsZWdlbmQucG9zaXRpb24gPSAiYm90dG9tIiwKICAgICAgICBwbG90LnRpdGxlID0gZWxlbWVudF90ZXh0KGhqdXN0ID0gMC41KSkKCmdnc2F2ZSgnfi9EZXNrdG9wL2RzXzFfcHJvYmxlbV9zZXRzL3Bwb2w1MjAzX2ZpbmFsX3Byb2plY3Qvdml6L2dvcF90cmlmZWN0YV8yMDE3X3Zpei5wbmcnLCBwbG90PWdvcF90cmlmZWN0YV8yMDE3X3Zpeiwgd2lkdGggPSA4LCBoZWlnaHQgPSA2LCBkcGkgPSAzMDApCmBgYA==</div>
 
 
 
