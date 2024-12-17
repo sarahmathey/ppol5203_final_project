@@ -2,7 +2,7 @@
 ## Elisha Clark, Sarah Mathey, Katie Vana
 
 ### Description
-
+Since the Dobbs v. Jackson Women's Health Organization decision was handed down by the US Supreme Court in 2022, the effect of access to abortion care on maternal mortality has become an increasingly salient topic. This paper asks whether there is a relationship between political indicators and maternal mortality rates when controlling for other predictive factors such as health indicator data. Moreover, we make the case for the necessity of continuing to collect accurate data on the issue to improve and expand this research.
 
 ### Files
 
