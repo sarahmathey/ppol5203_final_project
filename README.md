@@ -1,4 +1,4 @@
-# Final Project for PPOL5203: Data Science I 
+# A Data-Driven Approach to Politcal and Health Indicators on Maternal Mortality 
 ## Elisha Clark, Sarah Mathey, Katie Vana
 
 ### Description
@@ -34,5 +34,6 @@ Since the Dobbs v. Jackson Women's Health Organization decision was handed down 
 - *senate_leg_election_results.csv*
 
 #### viz
+Data visualizations generated in support of this work 
 
 [Google Drive](https://drive.google.com/drive/u/1/folders/1VKmPn7mmTaHvDyF3V5ZUW3z9oejjiPNt)
